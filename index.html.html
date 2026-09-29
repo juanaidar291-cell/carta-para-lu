@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#f7bcd3" />
+<title>Para Lu 💗</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --rose-deep:#b3245f;
+    --rose-soft:#e46a97;
+    --ink:#472233;
+    --card:rgba(255,255,255,.74);
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; }
+  html{ -webkit-text-size-adjust:100%; }
+
+  body{
+    min-height:100vh;
+    min-height:100dvh;
+    font-family:'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+    color:var(--ink);
+    background:#f8d3e2;
+    overflow-x:hidden;
+  }
+
+  /* ============ FONDO FIJO (no se desplaza) ============ */
+  .bg{
+    position:fixed;
+    inset:0;
+    z-index:0;
+    overflow:hidden;
+    background:
+      radial-gradient(120% 80% at 50% 110%, rgba(255,255,255,.85) 0%, rgba(255,255,255,0) 55%),
+      radial-gradient(90% 60% at 15% 10%, rgba(255,255,255,.6) 0%, rgba(255,255,255,0) 60%),
+      linear-gradient(180deg,#fff2f7 0%, #ffdcea 30%, #f8c0d7 62%, #eea6c4 100%);
+  }
+  /* halos / luces suaves */
+  .glow{
+    position:absolute;
+    border-radius:50%;
+    filter:blur(60px);
+    opacity:.55;
+    animation:glowPulse 9s ease-in-out infinite alternate;
+  }
+  .g1{ width:52vmin; height:52vmin; left:-12vmin; top:4vmin; background:#ffb3cf; }
+  .g2{ width:46vmin; height:46vmin; right:-10vmin; top:18vmin; background:#ffd0e2; animation-delay:-3s; }
+  .g3{ width:60vmin; height:60vmin; left:50%; transform:translateX(-50%); bottom:-16vmin; background:#ffc2da; animation-delay:-6s; }
+  @keyframes glowPulse{
+    from{ opacity:.35; transform:scale(.95); }
+    to{ opacity:.7; transform:scale(1.08); }
+  }
+
+  /* ramo de flores */
+  .bouquet{
+    position:absolute;
+    left:50%;
+    bottom:-3vh;
+    transform:translateX(-50%);
+    width:min(720px, 96vw);
+    display:flex;
+    justify-content:center;
+    pointer-events:none;
+  }
+  .bouquet svg{
+    width:100%;
+    height:auto;
+    transform-origin:50% 100%;
+    animation:sway 7.5s ease-in-out infinite alternate;
+    filter:drop-shadow(0 24px 36px rgba(150,25,80,.28));
+  }
+  @keyframes sway{
+    from{ transform:rotate(-1.8deg) translateY(0); }
+    to{ transform:rotate(1.8deg) translateY(-10px); }
+  }
+  .bob{ animation:bob 4.2s ease-in-out infinite alternate; }
+  @keyframes bob{
+    from{ transform:translateY(-3px) rotate(-2deg); }
+    to{ transform:translateY(4px) rotate(2deg); }
+  }
+  .bob2{ animation:bob 5.4s ease-in-out infinite alternate; }
+  .bob3{ animation:bob 3.4s ease-in-out infinite alternate; }
+
+  /* pétalos que caen */
+  .petals{ position:absolute; inset:0; pointer-events:none; }
+  .petals i{
+    position:absolute;
+    top:-10vh;
+    left:var(--x);
+    width:var(--s);
+    height:calc(var(--s) * .82);
+    background:radial-gradient(circle at 32% 28%, #fff0f6 0%, #ffa6c6 45%, #ec5f92 100%);
+    border-radius:62% 4% 62% 62%;
+    opacity:0;
+    box-shadow:0 2px 6px rgba(180,40,90,.18);
+    animation:fall var(--d) linear infinite;
+    animation-delay:var(--del);
+  }
+  @keyframes fall{
+    0%{ transform:translate3d(0,0,0) rotate(0deg); opacity:0; }
+    8%{ opacity:.9; }
+    70%{ opacity:.85; }
+    100%{ transform:translate3d(var(--drift), 122vh, 0) rotate(var(--spin)); opacity:0; }
+  }
+
+  /* ============ CONTENIDO QUE SE DESLIZA ============ */
+  .page{
+    position:relative;
+    z-index:2;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:clamp(20px,5vw,60px) clamp(14px,4vw,40px) 14vh;
+  }
+  .letter{
+    width:min(760px,100%);
+    background:var(--card);
+    -webkit-backdrop-filter:blur(14px) saturate(1.15);
+    backdrop-filter:blur(14px) saturate(1.15);
+    border:1px solid rgba(255,255,255,.85);
+    border-radius:clamp(18px,3.4vw,30px);
+    padding:clamp(24px,5.5vw,58px);
+    box-shadow:
+      0 34px 80px -24px rgba(140,25,70,.42),
+      0 2px 0 rgba(255,255,255,.6) inset;
+  }
+
+  .letter h1{
+    font-family:'Dancing Script', 'Brush Script MT', cursive;
+    font-weight:700;
+    font-size:clamp(2.05rem,7.2vw,3.5rem);
+    line-height:1.12;
+    text-align:center;
+    margin:0 0 .35em;
+    color:var(--rose-deep);
+    text-shadow:0 2px 10px rgba(255,255,255,.7);
+  }
+  .divider{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:12px;
+    margin:0 0 clamp(20px,4vw,34px);
+    color:var(--rose-soft);
+  }
+  .divider span{
+    height:1px;
+    width:min(90px,22vw);
+    background:linear-gradient(90deg,rgba(228,106,151,0) 0%,rgba(228,106,151,.85) 50%,rgba(228,106,151,0) 100%);
+  }
+  .divider b{ font-size:1.05rem; font-weight:400; }
+
+  .letter p{
+    font-size:clamp(1.06rem,2.7vw,1.24rem);
+    line-height:1.78;
+    margin:0 0 1.15em;
+    text-align:justify;
+    text-justify:inter-word;
+    hyphens:auto;
+  }
+  .letter .lead{
+    font-family:'Dancing Script', cursive;
+    font-size:clamp(1.5rem,4.6vw,1.95rem);
+    color:var(--rose-deep);
+    text-align:center;
+    margin:0 0 1.1em;
+  }
+  .letter .final{
+    font-weight:600;
+    color:#a01f56;
+    text-align:center;
+    font-size:clamp(1.15rem,3vw,1.35rem);
+  }
+  .sign{
+    font-family:'Dancing Script', cursive;
+    font-size:clamp(1.35rem,4vw,1.75rem);
+    color:var(--rose-deep);
+    text-align:right;
+    margin:1.4em 0 0 !important;
+  }
+
+  /* aparición al hacer scroll */
+  .rv{
+    opacity:0;
+    transform:translateY(20px);
+    transition:opacity .85s ease, transform .85s cubic-bezier(.22,.8,.3,1);
+  }
+  .rv.in{ opacity:1; transform:none; }
+
+  /* sugerencia de scroll */
+  .hint{
+    position:fixed;
+    left:50%;
+    bottom:14px;
+    transform:translateX(-50%);
+    z-index:5;
+    font-family:'Dancing Script', cursive;
+    font-size:1.15rem;
+    color:#8e2a58;
+    background:rgba(255,255,255,.68);
+    -webkit-backdrop-filter:blur(8px);
+    backdrop-filter:blur(8px);
+    border:1px solid rgba(255,255,255,.8);
+    border-radius:999px;
+    padding:7px 18px;
+    box-shadow:0 10px 24px -10px rgba(140,25,70,.5);
+    transition:opacity .5s ease, transform .5s ease;
+  }
+  .hint .arrow{ display:inline-block; animation:nudge 1.6s ease-in-out infinite; }
+  @keyframes nudge{ 0%,100%{ transform:translateY(0) } 50%{ transform:translateY(4px) } }
+  .hint.hide{ opacity:0; transform:translateX(-50%) translateY(14px); pointer-events:none; }
+
+  /* corazón final */
+  .endnote{
+    margin-top:clamp(26px,6vw,60px);
+    font-size:clamp(1.8rem,6vw,2.6rem);
+    animation:beat 1.9s ease-in-out infinite;
+    filter:drop-shadow(0 8px 18px rgba(160,30,80,.4));
+  }
+  @keyframes beat{
+    0%,100%{ transform:scale(1); }
+    18%{ transform:scale(1.16); }
+    36%{ transform:scale(1); }
+  }
+
+  @media (max-width:520px){
+    .bouquet{ bottom:-1vh; width:118vw; opacity:.95; }
+    .letter p{ text-align:left; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .bouquet svg,.bob,.bob2,.bob3,.petals i,.glow,.endnote,.hint .arrow{ animation:none !important; }
+    .rv{ opacity:1 !important; transform:none !important; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- FONDO FIJO -->
+  <div class="bg" aria-hidden="true">
+    <div class="glow g1"></div>
+    <div class="glow g2"></div>
+    <div class="glow g3"></div>
+
+    <div class="bouquet">
+      <svg viewBox="0 0 420 520" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="roseA" cx="36%" cy="28%" r="78%">
+            <stop offset="0%" stop-color="#ffe0ea"/>
+            <stop offset="42%" stop-color="#ff96b8"/>
+            <stop offset="100%" stop-color="#d63a6e"/>
+          </radialGradient>
+          <radialGradient id="roseB" cx="38%" cy="30%" r="78%">
+            <stop offset="0%" stop-color="#fff0f5"/>
+            <stop offset="50%" stop-color="#ffb6ce"/>
+            <stop offset="100%" stop-color="#c22a63"/>
+          </radialGradient>
+          <radialGradient id="roseC" cx="40%" cy="32%" r="80%">
+            <stop offset="0%" stop-color="#ffd7e3"/>
+            <stop offset="55%" stop-color="#e2557f"/>
+            <stop offset="100%" stop-color="#9c1147"/>
+          </radialGradient>
+          <linearGradient id="stemG" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#59a055"/>
+            <stop offset="100%" stop-color="#2c5c33"/>
+          </linearGradient>
+          <linearGradient id="leafG" x1="0" y1="0" x2="0.9" y2="1">
+            <stop offset="0%" stop-color="#7fbd6c"/>
+            <stop offset="100%" stop-color="#2f6b3a"/>
+          </linearGradient>
+          <linearGradient id="ribbonG" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#f087ae"/>
+            <stop offset="100%" stop-color="#c22a63"/>
+          </linearGradient>
+
+          <!-- formas base -->
+          <ellipse id="petalL" rx="17" ry="25"/>
+          <ellipse id="petalM" rx="11.5" ry="17"/>
+          <ellipse id="petalS" rx="7" ry="10.5"/>
+          <ellipse id="dpetal" rx="5.6" ry="12.5"/>
+          <path id="leaf" d="M0,0 C 13,-13 33,-15 50,-5 C 33,10 13,12 0,0 Z"/>
+
+          <!-- rosa rosada -->
+          <g id="rose">
+            <use href="#petalL" transform="rotate(0) translate(0,-25)"       fill="url(#roseA)"/>
+            <use href="#petalL" transform="rotate(60) translate(0,-25)"      fill="url(#roseA)"/>
+            <use href="#petalL" transform="rotate(120) translate(0,-25)"     fill="url(#roseA)"/>
+            <use href="#petalL" transform="rotate(180) translate(0,-25)"     fill="url(#roseA)"/>
+            <use href="#petalL" transform="rotate(240) translate(0,-25)"     fill="url(#roseA)"/>
+            <use href="#petalL" transform="rotate(300) translate(0,-25)"     fill="url(#roseA)"/>
+            <use href="#petalM" transform="rotate(36) translate(0,-15.5)"    fill="url(#roseB)"/>
+            <use href="#petalM" transform="rotate(108) translate(0,-15.5)"   fill="url(#roseB)"/>
+            <use href="#petalM" transform="rotate(180) translate(0,-15.5)"   fill="url(#roseB)"/>
+            <use href="#petalM" transform="rotate(252) translate(0,-15.5)"   fill="url(#roseB)"/>
+            <use href="#petalM" transform="rotate(324) translate(0,-15.5)"   fill="url(#roseB)"/>
+            <use href="#petalS" transform="rotate(45) translate(0,-8.5)"     fill="url(#roseC)"/>
+            <use href="#petalS" transform="rotate(135) translate(0,-8.5)"    fill="url(#roseC)"/>
+            <use href="#petalS" transform="rotate(225) translate(0,-8.5)"    fill="url(#roseC)"/>
+            <use href="#petalS" transform="rotate(315) translate(0,-8.5)"    fill="url(#roseC)"/>
+            <circle r="6.2" fill="url(#roseC)"/>
+            <circle r="2.8" fill="#a5134a" opacity=".75"/>
+          </g>
+
+          <!-- rosa más intensa -->
+          <g id="roseDeep">
+            <use href="#petalL" transform="rotate(0) translate(0,-25)"       fill="url(#roseC)"/>
+            <use href="#petalL" transform="rotate(60) translate(0,-25)"      fill="url(#roseC)"/>
+            <use href="#petalL" transform="rotate(120) translate(0,-25)"     fill="url(#roseC)"/>
+            <use href="#petalL" transform="rotate(180) translate(0,-25)"     fill="url(#roseC)"/>
+            <use href="#petalL" transform="rotate(240) translate(0,-25)"     fill="url(#roseC)"/>
+            <use href="#petalL" transform="rotate(300) translate(0,-25)"     fill="url(#roseC)"/>
+            <use href="#petalM" transform="rotate(36) translate(0,-15.5)"    fill="url(#roseA)"/>
+            <use href="#petalM" transform="rotate(108) translate(0,-15.5)"   fill="url(#roseA)"/>
+            <use href="#petalM" transform="rotate(180) translate(0,-15.5)"   fill="url(#roseA)"/>
+            <use href="#petalM" transform="rotate(252) translate(0,-15.5)"   fill="url(#roseA)"/>
+            <use href="#petalM" transform="rotate(324) translate(0,-15.5)"   fill="url(#roseA)"/>
+            <use href="#petalS" transform="rotate(45) translate(0,-8.5)"     fill="url(#roseC)"/>
+            <use href="#petalS" transform="rotate(135) translate(0,-8.5)"    fill="url(#roseC)"/>
+            <use href="#petalS" transform="rotate(225) translate(0,-8.5)"    fill="url(#roseC)"/>
+            <use href="#petalS" transform="rotate(315) translate(0,-8.5)"    fill="url(#roseC)"/>
+            <circle r="6" fill="#8f0f40"/>
+            <circle r="2.6" fill="#ffd0e0" opacity=".55"/>
+          </g>
+
+          <!-- margarita -->
+          <g id="daisy">
+            <use href="#dpetal" transform="rotate(0) translate(0,-12)"    fill="#fffdfe"/>
+            <use href="#dpetal" transform="rotate(60) translate(0,-12)"   fill="#fff6fa"/>
+            <use href="#dpetal" transform="rotate(120) translate(0,-12)"  fill="#fffdfe"/>
+            <use href="#dpetal" transform="rotate(180) translate(0,-12)"  fill="#fff6fa"/>
+            <use href="#dpetal" transform="rotate(240) translate(0,-12)"  fill="#fffdfe"/>
+            <use href="#dpetal" transform="rotate(300) translate(0,-12)"  fill="#fff6fa"/>
+            <circle r="5" fill="#ffd469"/>
+            <circle r="2.4" fill="#f0a92e"/>
+          </g>
+        </defs>
+
+        <!-- tallos -->
+        <g fill="none" stroke="url(#stemG)" stroke-width="5" stroke-linecap="round">
+          <path d="M210,472 C 208,380 210,260 210,182"/>
+          <path d="M210,472 C 190,410 130,300 120,226"/>
+          <path d="M210,472 C 230,410 292,300 300,222"/>
+          <path d="M210,472 C 190,378 148,240 154,128"/>
+          <path d="M210,472 C 232,378 274,240 266,124"/>
+          <path d="M210,472 C 175,398 100,250 86,172"/>
+          <path d="M210,472 C 245,398 330,250 340,168"/>
+          <path d="M210,472 C 212,360 210,200 210,68"/>
+        </g>
+
+        <!-- hojas -->
+        <g>
+          <use href="#leaf" transform="translate(163,332) rotate(-38) scale(.92)" fill="url(#leafG)"/>
+          <use href="#leaf" transform="translate(257,332) rotate(38) scale(.92)"  fill="url(#leafG)"/>
+          <use href="#leaf" transform="translate(138,258) rotate(-52) scale(.8)"  fill="url(#leafG)"/>
+          <use href="#leaf" transform="translate(282,254) rotate(52) scale(.8)"   fill="url(#leafG)"/>
+          <use href="#leaf" transform="translate(182,402) rotate(-18) scale(.72)" fill="url(#leafG)"/>
+          <use href="#leaf" transform="translate(238,402) rotate(18) scale(.72)"  fill="url(#leafG)"/>
+        </g>
+
+        <!-- flores -->
+        <g transform="translate(210,155) scale(1.16)"><use href="#roseDeep" class="bob"/></g>
+        <g transform="translate(118,205) scale(.96)"><use href="#rose" class="bob2" style="animation-delay:-1.4s"/></g>
+        <g transform="translate(302,200) scale(1.02)"><use href="#rose" class="bob3" style="animation-delay:-2.2s"/></g>
+        <g transform="translate(152,105) scale(.76)"><use href="#roseDeep" class="bob2" style="animation-delay:-.7s"/></g>
+        <g transform="translate(268,100) scale(.78)"><use href="#rose" class="bob" style="animation-delay:-1.9s"/></g>
+        <g transform="translate(82,158) scale(.88)"><use href="#daisy" class="bob3" style="animation-delay:-1s"/></g>
+        <g transform="translate(340,150) scale(.88)"><use href="#daisy" class="bob2" style="animation-delay:-2.6s"/></g>
+        <g transform="translate(210,42) scale(.96)"><use href="#daisy" class="bob" style="animation-delay:-3s"/></g>
+        <g transform="translate(120,62) scale(.62)"><use href="#rose" class="bob3" style="animation-delay:-2s"/></g>
+        <g transform="translate(300,58) scale(.64)"><use href="#roseDeep" class="bob2" style="animation-delay:-.4s"/></g>
+
+        <!-- moño -->
+        <g>
+          <path d="M178,400 Q210,428 242,400" stroke="url(#ribbonG)" stroke-width="12" fill="none" stroke-linecap="round"/>
+          <path d="M210,424 C 186,398 156,404 158,420 C 160,438 190,434 210,424 Z" fill="url(#ribbonG)"/>
+          <path d="M210,424 C 234,398 264,404 262,420 C 260,438 230,434 210,424 Z" fill="url(#ribbonG)"/>
+          <path d="M210,424 C 199,446 195,464 186,482" stroke="url(#ribbonG)" stroke-width="8" fill="none" stroke-linecap="round"/>
+          <path d="M210,424 C 221,446 225,464 234,482" stroke="url(#ribbonG)" stroke-width="8" fill="none" stroke-linecap="round"/>
+          <circle cx="210" cy="424" r="8.5" fill="#b02358"/>
+          <circle cx="207.5" cy="421.5" r="2.6" fill="#ffd7e5" opacity=".6"/>
+        </g>
+      </svg>
+    </div>
+
+    <!-- pétalos -->
+    <div class="petals">
+      <i style="--x:5%;  --s:16px; --d:12s; --del:-1s;  --drift:60px;  --spin:300deg"></i>
+      <i style="--x:14%; --s:11px; --d:15s; --del:-7s;  --drift:-40px; --spin:-260deg"></i>
+      <i style="--x:23%; --s:14px; --d:10s; --del:-3.5s;--drift:80px;  --spin:340deg"></i>
+      <i style="--x:33%; --s:9px;  --d:17s; --del:-11s; --drift:30px;  --spin:-200deg"></i>
+      <i style="--x:44%; --s:15px; --d:13s; --del:-5s;  --drift:-70px; --spin:280deg"></i>
+      <i style="--x:55%; --s:12px; --d:11s; --del:-8.5s;--drift:50px;  --spin:-320deg"></i>
+      <i style="--x:64%; --s:17px; --d:16s; --del:-2s;  --drift:-50px; --spin:220deg"></i>
+      <i style="--x:73%; --s:10px; --d:12.5s;--del:-6s; --drift:70px;  --spin:-280deg"></i>
+      <i style="--x:82%; --s:13px; --d:14s; --del:-9s;  --drift:40px;  --spin:320deg"></i>
+      <i style="--x:91%; --s:12px; --d:10.5s;--del:-4s; --drift:-60px; --spin:-240deg"></i>
+      <i style="--x:38%; --s:8px;  --d:18s; --del:-13s; --drift:90px;  --spin:360deg"></i>
+      <i style="--x:68%; --s:9px;  --d:19s; --del:-15s; --drift:-80px; --spin:-300deg"></i>
+    </div>
+  </div>
+
+  <!-- CARTA (se desliza) -->
+  <main class="page">
+    <article class="letter">
+      <h1 class="rv">Para Lu mi super mega cool novia</h1>
+      <div class="divider rv"><span></span><b>❤</b><span></span></div>
+
+      <p class="lead rv">Para vos, mi amor ❤️</p>
+
+      <p class="rv">Amor, no sé muy bien por dónde empezar, porque siento que hay tantas cosas que quiero decirte que ninguna palabra parece suficiente. Pero quiero intentarlo, porque te merecés saber todo lo que siento por vos.</p>
+
+      <p class="rv">Desde aquel 1 de agosto, cuando te pedí que fueras mi novia en la parada del micro, en 31 y 60, siento que algo cambió en mi vida. Capaz en ese momento no me di cuenta de todo lo que significaba, pero hoy miro para atrás y me doy cuenta de que desde ese día soy mucho más feliz. Y hay algo que me sigue haciendo sonreír cada vez que lo pienso: saber que sos mi novia. Parece una cosa simple, pero para mí significa muchísimo. Saber que te tengo, que puedo compartir mis días con vos, que puedo quererte y que vos me elegiste a mí… es algo que me hace sentir muy afortunado.</p>
+
+      <p class="rv">Te admiro muchísimo, amor. Admiro tu forma de ser, tu manera de hacerme feliz incluso sin darte cuenta y todas esas pequeñas cosas tuyas que quizás vos no ves, pero que yo amo. Me encanta poder compartir momentos con vos, reírnos por cualquier pavada, hablar de cualquier cosa y simplemente saber que estás ahí. Y sí, probablemente también me tengas que aguantar mis chistes malos y mis momentos medio insoportables jajaja, pero prometo que vienen con muchísimo amor incluido.</p>
+
+      <p class="rv">También quiero hablarte de algo que me importa mucho. Sé que a veces mis actitudes no son las mejores, y sé que algunas cosas que hago pueden lastimarte o hacerte sentir mal. Y quiero pedirte perdón por eso. No quiero justificarme ni hacer como si no pasara nada, porque yo también soy consciente de mis errores y, sinceramente, estoy cansado de algunas de mis propias actitudes. Quiero cambiarlas. Quiero ser mejor, no solamente por mí, sino también por vos y por nuestra relación.</p>
+
+      <p class="rv">Capaz no puedo cambiar todo de un día para el otro, y sé que quizás algunas veces no se note, pero quiero que sepas que lo intento. Todos los días. A veces me sale mejor y otras veces no tanto, pero nunca dejo de intentarlo. Porque vos me importás muchísimo y sé que no te merecés recibir cosas que te hagan sentir mal de mi parte.</p>
+
+      <p class="rv">Y perdón también si algunas veces te digo que estoy bien cuando en realidad no lo estoy. No es porque no confíe en vos ni porque no quiera contarte lo que me pasa. Muchas veces simplemente no quiero que te preocupes por mí. Pero sé que tampoco está bien esconderte lo que siento, y quiero aprender a compartir esas cosas con vos, porque también quiero que seas esa persona con la que puedo estar mal, no solamente la persona con la que comparto mis momentos felices.</p>
+
+      <p class="rv">Quiero que sepas que, detrás de cada error mío, siempre hay un amor enorme por vos. Y aunque a veces no sepa demostrarlo de la mejor manera, te amo muchísimo. Quiero seguir aprendiendo a quererte mejor, a cuidarte, a escucharte y a hacerte sentir todo lo importante que sos para mí.</p>
+
+      <p class="rv">Sé que a veces mis actitudes no son las mejores, pero quiero que sepas que, a pesar de mis imperfecciones, mi amor por vos nunca cambia y te amo con todo el corazón.</p>
+
+      <p class="rv">Y si hay algo que quiero que nunca dudes, es esto: te elegiría una y mil veces más. Desde aquella parada de micro hasta cada día que vino después, me hacés sentir que tuve mucha suerte de encontrarte. Espero poder seguir construyendo muchísimos recuerdos con vos, seguir riéndonos de nuestras pavadas, seguir aprendiendo juntos y, sobre todo, seguir amándote cada día un poquito más.</p>
+
+      <p class="final rv">Te amo, Lu. Muchísimo más de lo que a veces sé explicar. ❤️</p>
+
+      <p class="sign rv">att: tu super cool novio lucho</p>
+    </article>
+
+    <div class="endnote" aria-hidden="true">💗</div>
+  </main>
+
+  <div class="hint" id="hint">Deslizá para leer <span class="arrow">↓</span></div>
+
+  <script>
+    (function () {
+      var items = document.querySelectorAll('.rv');
+
+      if ('IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            if (e.isIntersecting) {
+              e.target.classList.add('in');
+              io.unobserve(e.target);
+            }
+          });
+        }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+        items.forEach(function (el) { io.observe(el); });
+      } else {
+        items.forEach(function (el) { el.classList.add('in'); });
+      }
+
+      var hint = document.getElementById('hint');
+      function onScroll() {
+        if (window.scrollY > 50) {
+          hint.classList.add('hide');
+          window.removeEventListener('scroll', onScroll);
+        }
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    })();
+  </script>
+</body>
+</html>
